@@ -1,18 +1,14 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 
-function Board({ activeCell, setActiveCell, num }) {
+function Board({ activeCell, setActiveCell, currentNum, setCurrentNum }) {
   const size = 9;
-  const [currentNum, setCurrentNum] = useState(0);
 
-  useEffect(() => {
-    setCurrentNum(num);
-  }, [num]);
   function changeActiveCell(row, col) {
     activeCell[0] === row && activeCell[1] === col
       ? setActiveCell([])
       : setActiveCell([row, col]);
-    setCurrentNum(0);
+    setCurrentNum(-1);
   }
 
   return (
@@ -35,7 +31,7 @@ function Board({ activeCell, setActiveCell, num }) {
                     num={
                       activeCell[0] === i && activeCell[1] === j
                         ? currentNum
-                        : 0
+                        : -1
                     }
                     onClick={() => changeActiveCell(i, j)}
                   />
@@ -54,7 +50,7 @@ function Cell({ row, col, size, onClick, activeCell, num }) {
   const [currentNum, setCurrentNum] = useState(0);
 
   useEffect(() => {
-    if (num !== 0) {
+    if (num !== -1) {
       setCurrentNum(num);
     }
   }, [num]);

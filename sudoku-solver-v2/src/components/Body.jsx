@@ -10,12 +10,16 @@ function Body() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [activeCell, setActiveCell] = useState([]);
   const [currentNum, setCurrentNum] = useState(0);
+  /*for currentNum
+  -1 indicates dont change the current num
+  0 indicates clear
+  any +ve num is the num*/
 
   useEffect(() => {
-    setCurrentNum(0);
+    setCurrentNum(-1);
   }, [activeCell]);
 
-  function setNum(cellPos, num) {
+  function setNum(num) {
     setCurrentNum(num);
   }
 
@@ -45,20 +49,21 @@ function Body() {
         <Board
           activeCell={activeCell}
           setActiveCell={setActiveCell}
-          num={currentNum}
+          currentNum={currentNum}
+          setCurrentNum={setCurrentNum}
         />
         <div className=" w-96  flex flex-col items-center gap-8 ">
           <div className=" grid grid-cols-3 gap-6 ">
             {[...Array(size).keys()].map((_, j) => {
               return (
-                <NumBtn key={j} OnClick={() => setNum(activeCell, j + 1)}>
+                <NumBtn key={j} OnClick={() => setNum(j + 1)}>
                   {j + 1}
                 </NumBtn>
               );
             })}
           </div>
           <div className="pb-10">
-            <BigBtn OnClick={() => setActiveCell([])}>Clear</BigBtn>
+            <BigBtn OnClick={() => setNum(0)}>Clear</BigBtn>
           </div>
           <div className=" flex flex-row items-center justify-center gap-8">
             <BigBtn>Solve</BigBtn>
