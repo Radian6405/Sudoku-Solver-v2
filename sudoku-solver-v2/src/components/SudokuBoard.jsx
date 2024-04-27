@@ -3,11 +3,42 @@ import { useEffect } from "react";
 
 function Board({ activeCell, setActiveCell, currentNum, setCurrentNum }) {
   const size = 9;
+  const initBoard = {
+    0: [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    1: [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    2: [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    3: [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    4: [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    5: [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    6: [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    7: [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    8: [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  };
+
+  const [Board, setBoard] = useState(initBoard);
+
+  useEffect(() => {
+    if (currentNum !== -1 && activeCell.length !== 0) {
+      updateBoard(currentNum, activeCell[0], activeCell[1]);
+    }
+  }, [currentNum]);
+
+  function updateBoard(num, row, col) {
+    const newRow = Board[row].map((value, index) => {
+      if (col === index) return num;
+      else return value;
+    });
+    var newBoard = { ...Board };
+    newBoard[row] = newRow;
+
+    setBoard(newBoard);
+  }
 
   function changeActiveCell(row, col) {
     activeCell[0] === row && activeCell[1] === col
-      ? setActiveCell([])
+      ? setActiveCell([]) //if current active cell is same as new
       : setActiveCell([row, col]);
+
     setCurrentNum(-1);
   }
 
@@ -17,21 +48,24 @@ function Board({ activeCell, setActiveCell, currentNum, setCurrentNum }) {
         className="bg-darkbg  border-2 border-text text-text 
                       size-min flex flex-col"
       >
+        {/* rows */}
         {[...Array(size).keys()].map((_, i) => {
           return (
             <div key={i} className="flex flex-row gap-0">
+              {/* columns */}
               {[...Array(size).keys()].map((_, j) => {
                 return (
+                  // cells
                   <Cell
-                    key={10 * i + j}
+                    key={size * i + j}
                     row={i}
                     col={j}
+                    value={Board[i][j]}
                     size={size}
-                    activeCell={activeCell}
-                    num={
-                      activeCell[0] === i && activeCell[1] === j
-                        ? currentNum
-                        : -1
+                    isActive={
+                      activeCell.length !== 0 &&
+                      activeCell[0] === i &&
+                      activeCell[1] === j
                     }
                     onClick={() => changeActiveCell(i, j)}
                   />
@@ -45,15 +79,8 @@ function Board({ activeCell, setActiveCell, currentNum, setCurrentNum }) {
   );
 }
 
-function Cell({ row, col, size, onClick, activeCell, num }) {
+function Cell({ row, col, value, size, onClick, isActive }) {
   const subdiv = Math.floor(Math.sqrt(size));
-  const [currentNum, setCurrentNum] = useState(0);
-
-  useEffect(() => {
-    if (num !== -1) {
-      setCurrentNum(num);
-    }
-  }, [num]);
 
   return (
     <div
@@ -62,13 +89,10 @@ function Cell({ row, col, size, onClick, activeCell, num }) {
         .concat(" ", col % subdiv === 0 && " border-l-2  ")
         .concat(" ", row % subdiv === subdiv - 1 && " border-b-2  ")
         .concat(" ", row % subdiv === 0 && " border-t-2  ")
-        .concat(
-          " ",
-          activeCell[0] === row && activeCell[1] === col && "bg-primary"
-        )}
+        .concat(" ", isActive && "bg-primary")}
       onClick={onClick}
     >
-      {currentNum !== 0 ? currentNum : " "}
+      {value !== 0 ? value : " "}
     </div>
   );
 }

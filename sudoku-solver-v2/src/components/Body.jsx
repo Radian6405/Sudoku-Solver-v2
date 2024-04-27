@@ -15,6 +15,7 @@ function Body() {
   0 indicates clear
   any +ve num is the num*/
 
+  // maintains current active number
   useEffect(() => {
     setCurrentNum(-1);
   }, [activeCell]);
@@ -26,6 +27,7 @@ function Body() {
   return (
     <div className="px-1 py-1 sm:px-20 sm:py-10 bg-background flex flex-col ">
       <div className="h-28   flex flex-row items-center justify-center gap-32 ">
+        {/* Difficulty selector */}
         <div
           className="w-42 h-16
             flex justify-center items-center 
@@ -45,14 +47,18 @@ function Body() {
           </BigBtn>
         </div>
       </div>
+
       <div className="flex justify-center p-5 gap-16">
+        {/* Sudoku board */}
         <Board
           activeCell={activeCell}
           setActiveCell={setActiveCell}
           currentNum={currentNum}
           setCurrentNum={setCurrentNum}
         />
+
         <div className=" w-96  flex flex-col items-center gap-8 ">
+          {/* Numpad */}
           <div className=" grid grid-cols-3 gap-6 ">
             {[...Array(size).keys()].map((_, j) => {
               return (
@@ -62,12 +68,14 @@ function Body() {
               );
             })}
           </div>
-          <div className="pb-10">
+
+          {/* buttons */}
+          <div className=" flex flex-col  items-center justify-center gap-8">
             <BigBtn OnClick={() => setNum(0)}>Clear</BigBtn>
-          </div>
-          <div className=" flex flex-row items-center justify-center gap-8">
-            <BigBtn>Solve</BigBtn>
-            <BigBtn>Next</BigBtn>
+            <div className="flex flex-row  items-center justify-center gap-8">
+              <BigBtn>Solve</BigBtn>
+              <BigBtn>Next</BigBtn>
+            </div>
           </div>
         </div>
       </div>
@@ -106,8 +114,4 @@ function NumBtn({ OnClick, children }) {
       </div>
     </>
   );
-}
-
-{
-  /*<div className="text-white">{searchParams.get("difficulty")}</div>*/
 }
