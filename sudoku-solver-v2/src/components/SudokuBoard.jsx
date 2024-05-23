@@ -1,36 +1,28 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
+import { initBoard, isValidCell, showError } from "./util/SudokuHelpers";
 
 function Board({ activeCell, setActiveCell, currentNum, setCurrentNum }) {
   const size = 9;
-  const initBoard = {
-    0: [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    1: [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    2: [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    3: [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    4: [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    5: [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    6: [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    7: [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    8: [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  };
+  const emptyBoard = initBoard(size);
 
-  const [Board, setBoard] = useState(initBoard);
+  const [Board, setBoard] = useState(emptyBoard);
 
   useEffect(() => {
-    if (currentNum !== -1 && activeCell.length !== 0) {
+    if (
+      currentNum !== -1 &&
+      activeCell.length !== 0 &&
+      !Board[activeCell[0]][activeCell[1]].isLocked
+    ) {
+      let check = isValidCell(Board, activeCell, currentNum);
       updateBoard(currentNum, activeCell[0], activeCell[1]);
+      setBoard(showError(Board, check, activeCell));
     }
   }, [currentNum]);
 
   function updateBoard(num, row, col) {
-    const newRow = Board[row].map((value, index) => {
-      if (col === index) return num;
-      else return value;
-    });
     var newBoard = { ...Board };
-    newBoard[row] = newRow;
-
+    newBoard[row][col].value = num;
     setBoard(newBoard);
   }
 
@@ -60,14 +52,16 @@ function Board({ activeCell, setActiveCell, currentNum, setCurrentNum }) {
                     key={size * i + j}
                     row={i}
                     col={j}
-                    value={Board[i][j]}
+                    cell={Board[i][j]}
                     size={size}
                     isActive={
                       activeCell.length !== 0 &&
                       activeCell[0] === i &&
                       activeCell[1] === j
                     }
-                    onClick={() => changeActiveCell(i, j)}
+                    onClick={() => {
+                      if (!Board.isLocked) changeActiveCell(i, j);
+                    }}
                   />
                 );
               })}
@@ -79,20 +73,26 @@ function Board({ activeCell, setActiveCell, currentNum, setCurrentNum }) {
   );
 }
 
-function Cell({ row, col, value, size, onClick, isActive }) {
+function Cell({ row, col, cell, size, onClick, isActive }) {
   const subdiv = Math.floor(Math.sqrt(size));
 
   return (
     <div
-      className={"size-[3.5rem] border-[1px] border-text flex items-center justify-center text-3xl select-none hover:cursor-pointer"
-        .concat(" ", col % subdiv === subdiv - 1 && " border-r-2  ")
-        .concat(" ", col % subdiv === 0 && " border-l-2  ")
-        .concat(" ", row % subdiv === subdiv - 1 && " border-b-2  ")
-        .concat(" ", row % subdiv === 0 && " border-t-2  ")
-        .concat(" ", isActive && "bg-primary")}
+      className={"size-[3.5rem] flex items-center justify-center text-3xl select-none hover:cursor-pointer"
+        //sudoku board border logic
+        .concat(" ", col % subdiv === subdiv - 1 && !isActive && " border-r-2")
+        .concat(" ", col % subdiv === 0 && !isActive && " border-l-2")
+        .concat(" ", row % subdiv === subdiv - 1 && !isActive && " border-b-2")
+        .concat(" ", row % subdiv === 0 && !isActive && " border-t-2")
+        // active and error cell logic
+        .concat(" ", isActive || cell.isError ? "border-4" : "border-[1px]")
+        .concat(" ", cell.isError && "border-red-500")
+        .concat(" ", isActive && "border-accent ")
+        // preloaded cell logic
+        .concat(" ", cell.isLocked ? "text-white" : "text-primary")}
       onClick={onClick}
     >
-      {value !== 0 ? value : " "}
+      {cell.value !== 0 ? cell.value : " "}
     </div>
   );
 }
