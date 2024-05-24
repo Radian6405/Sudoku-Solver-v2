@@ -6,7 +6,7 @@ import {
   isValidCell,
   loadSudoku,
   showError,
-} from "./util/SudokuHelpers";
+} from "./util/Helpers";
 
 function Board({ activeCell, setActiveCell, currentNum, setCurrentNum }) {
   const size = 9;
@@ -14,11 +14,12 @@ function Board({ activeCell, setActiveCell, currentNum, setCurrentNum }) {
 
   const [Board, setBoard] = useState(emptyBoard);
   const [searchParams, setSearchParams] = useSearchParams();
-  const [difficulty, setDifficulty] = "";
 
   useEffect(() => {
-    //i cant figure out what searchParams returns when there are no params so this has to do
+    //loads sudoku based on parameters in url
+    
     if (
+      //PS: i cant figure out what searchParams returns when there are no params so this has to do
       searchParams.get("difficulty") === "easy" ||
       searchParams.get("difficulty") === "medium" ||
       searchParams.get("difficulty") === "hard"
@@ -28,11 +29,13 @@ function Board({ activeCell, setActiveCell, currentNum, setCurrentNum }) {
   }, [searchParams]);
 
   useEffect(() => {
+    //updates board when current num changes
     if (
       currentNum !== -1 &&
       activeCell.length !== 0 &&
       !Board[activeCell[0]][activeCell[1]].isLocked
     ) {
+      //validity check for cells
       let check = isValidCell(Board, activeCell, currentNum);
       updateBoard(currentNum, activeCell[0], activeCell[1]);
       setBoard(showError(Board, check, activeCell));
@@ -40,12 +43,14 @@ function Board({ activeCell, setActiveCell, currentNum, setCurrentNum }) {
   }, [currentNum]);
 
   function updateBoard(num, row, col) {
+    //updates board by creating a new board
     var newBoard = { ...Board };
     newBoard[row][col].value = num;
     setBoard(newBoard);
   }
 
   function changeActiveCell(row, col) {
+    //changes active cell
     activeCell[0] === row && activeCell[1] === col
       ? setActiveCell([]) //if current active cell is same as new
       : setActiveCell([row, col]);
