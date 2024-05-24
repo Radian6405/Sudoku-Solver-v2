@@ -1,12 +1,31 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
-import { initBoard, isValidCell, showError } from "./util/SudokuHelpers";
+import React, { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
+
+import {
+  initBoard,
+  isValidCell,
+  loadSudoku,
+  showError,
+} from "./util/SudokuHelpers";
 
 function Board({ activeCell, setActiveCell, currentNum, setCurrentNum }) {
   const size = 9;
   const emptyBoard = initBoard(size);
 
   const [Board, setBoard] = useState(emptyBoard);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [difficulty, setDifficulty] = "";
+
+  useEffect(() => {
+    //i cant figure out what searchParams returns when there are no params so this has to do
+    if (
+      searchParams.get("difficulty") === "easy" ||
+      searchParams.get("difficulty") === "medium" ||
+      searchParams.get("difficulty") === "hard"
+    ) {
+      setBoard(loadSudoku(searchParams.get("difficulty"), size));
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     if (

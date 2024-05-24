@@ -1,3 +1,8 @@
+import EasyBoards from "../../../public/easy.json";
+import MediumBoards from "../../../public/medium.json";
+import HardBoards from "../../../public/hard.json";
+
+// returns basic empty board
 export function initBoard(size) {
   let Board = {};
   for (let i = 0; i < size; i++) {
@@ -12,6 +17,7 @@ export function initBoard(size) {
   return Board;
 }
 
+//cell checker functions
 export function isValidCell(Board, loc, num) {
   if (num === 0) return { isValid: true };
 
@@ -52,4 +58,31 @@ export function showError(Board, check, cell) {
   newBoard[cell[0]][cell[1]].isError = true;
   newBoard.isLocked = true;
   return newBoard;
+}
+
+//loader functions
+export function loadSudoku(difficulty, size) {
+  let Board = initBoard(size);
+  let sudoku = getSudokuData(difficulty);
+
+  for (let i = 0; i < size; i++) {
+    for (let j = 0; j < size; j++) {
+      Board[i][j].value = sudoku[i * 9 + j];
+      if (Board[i][j].value !== 0) Board[i][j].isLocked = true;
+    }
+  }
+  return Board;
+}
+
+function getSudokuData(difficulty) {
+  switch (difficulty) {
+    case "easy":
+      return EasyBoards[Math.round(Math.random() * 1000)];
+    case "medium":
+      return MediumBoards[Math.round(Math.random() * 1000)];
+    case "hard":
+      return HardBoards[Math.round(Math.random() * 1000)];
+    default:
+      return {};
+  }
 }
