@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 
-import {
-  initBoard,
-  isValidCell,
-  loadSudoku,
-  showError,
-} from "./util/Helpers";
+import { initBoard, isValidCell, loadSudoku, showError } from "./util/Helpers";
 
 function Board({ activeCell, setActiveCell, currentNum, setCurrentNum }) {
   const size = 9;
@@ -17,14 +12,17 @@ function Board({ activeCell, setActiveCell, currentNum, setCurrentNum }) {
 
   useEffect(() => {
     //loads sudoku based on parameters in url
-    
+
+    let difficulty = searchParams.get("difficulty");
     if (
-      //PS: i cant figure out what searchParams returns when there are no params so this has to do
-      searchParams.get("difficulty") === "easy" ||
-      searchParams.get("difficulty") === "medium" ||
-      searchParams.get("difficulty") === "hard"
+      //PS: i cant figure out what searchParams.get() returns when there are no params so this has to do
+      (difficulty === "easy" ||
+        difficulty === "medium" ||
+        difficulty === "hard") &&
+      searchParams.get("next")
     ) {
-      setBoard(loadSudoku(searchParams.get("difficulty"), size));
+      setBoard(loadSudoku(difficulty, size));
+      setSearchParams({ difficulty: difficulty });
     }
   }, [searchParams]);
 

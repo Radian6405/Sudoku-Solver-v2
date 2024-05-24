@@ -85,7 +85,6 @@ export function loadSudoku(difficulty, size) {
 
   return Board;
 }
-
 function getSudokuData(difficulty) {
   //loads json data
   switch (difficulty) {

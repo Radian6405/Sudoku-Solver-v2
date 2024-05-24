@@ -36,13 +36,21 @@ function Body() {
           Difficulty:
         </div>
         <div className="h-28 flex flex-row items-center gap-20">
-          <BigBtn OnClick={() => setSearchParams({ difficulty: "easy" })}>
+          <BigBtn
+            OnClick={() => setSearchParams({ difficulty: "easy", next: true })}
+          >
             Easy
           </BigBtn>
-          <BigBtn OnClick={() => setSearchParams({ difficulty: "medium" })}>
+          <BigBtn
+            OnClick={() =>
+              setSearchParams({ difficulty: "medium", next: true })
+            }
+          >
             Medium
           </BigBtn>
-          <BigBtn OnClick={() => setSearchParams({ difficulty: "hard" })}>
+          <BigBtn
+            OnClick={() => setSearchParams({ difficulty: "hard", next: true })}
+          >
             Hard
           </BigBtn>
         </div>
@@ -74,7 +82,16 @@ function Body() {
             <BigBtn OnClick={() => setNum(0)}>Clear</BigBtn>
             <div className="flex flex-row  items-center justify-center gap-8">
               <BigBtn>Solve</BigBtn>
-              <BigBtn>Next</BigBtn>
+              <BigBtn
+                OnClick={() => {
+                  setSearchParams({
+                    difficulty: searchParams.get("difficulty"),
+                    next: true,
+                  });
+                }}
+              >
+                Next
+              </BigBtn>
             </div>
           </div>
         </div>
