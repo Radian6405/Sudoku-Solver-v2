@@ -1,6 +1,6 @@
-import EasyBoards from "../../../public/easy.json";
-import MediumBoards from "../../../public/medium.json";
-import HardBoards from "../../../public/hard.json";
+import EasyBoards from "../../assets/database/easy.json";
+import MediumBoards from "../../assets/database/medium.json";
+import HardBoards from "../../assets/database/hard.json";
 
 export function initBoard(size) {
   // returns basic empty board
