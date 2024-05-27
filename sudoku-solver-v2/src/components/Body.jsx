@@ -1,6 +1,5 @@
 import React, { Children, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import Unlock from "./icons/unlock";
 import Board from "./SudokuBoard";
 import { useEffect } from "react";
 
