@@ -2,8 +2,16 @@ import React, { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 
 import { initBoard, isValidCell, loadSudoku, showError } from "./util/Helpers";
+import { solveBoard } from "./util/Solvers";
 
-function Board({ activeCell, setActiveCell, currentNum, setCurrentNum }) {
+function Board({
+  activeCell,
+  setActiveCell,
+  currentNum,
+  setCurrentNum,
+  solve,
+  setSolve,
+}) {
   const size = 9;
   const emptyBoard = initBoard(size);
 
@@ -11,23 +19,8 @@ function Board({ activeCell, setActiveCell, currentNum, setCurrentNum }) {
   const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
-    //loads sudoku based on parameters in url
-
-    let difficulty = searchParams.get("difficulty");
-    if (
-      //PS: i cant figure out what searchParams.get() returns when there are no params so this has to do
-      (difficulty === "easy" ||
-        difficulty === "medium" ||
-        difficulty === "hard") &&
-      searchParams.get("next")
-    ) {
-      setBoard(loadSudoku(difficulty, size));
-      setSearchParams({ difficulty: difficulty });
-    }
-  }, [searchParams]);
-
-  useEffect(() => {
     //updates board when current num changes
+
     if (
       currentNum !== -1 &&
       activeCell.length !== 0 &&
@@ -39,6 +32,31 @@ function Board({ activeCell, setActiveCell, currentNum, setCurrentNum }) {
       setBoard(showError(Board, check, activeCell));
     }
   }, [currentNum]);
+
+  useEffect(() => {
+    //loads new sudoku based on parameters in url
+
+    let difficulty = searchParams.get("difficulty");
+    if (
+      //PS: i cant figure out what searchParams.get() returns when there are no params so this has to do
+      (difficulty === "easy" ||
+        difficulty === "medium" ||
+        difficulty === "hard") &&
+      searchParams.get("next")
+    ) {
+      setBoard(loadSudoku(difficulty, size));
+      setSearchParams({ difficulty: difficulty });
+      setSolve(false); //reset solve for the new sudoku
+    }
+  }, [searchParams]);
+
+  useEffect(() => {
+    //solves the board
+    if (solve) {
+      setBoard(solveBoard(Board))
+      // solveBoard(Board);
+    }
+  }, [solve]);
 
   function updateBoard(num, row, col) {
     //updates board by creating a new board

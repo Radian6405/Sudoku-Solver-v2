@@ -32,7 +32,7 @@ export function isValidCell(Board, loc, num) {
   for (let i = 0; i < Board.size; i++) {
     if (Board[i][loc[1]].value === num && i !== loc[0])
       return { isValid: false, row: i, col: loc[1] };
-  }
+  } 
   //smaller grid check
   const rnew = loc[0] - (loc[0] % Board.subdiv);
   const cnew = loc[1] - (loc[1] % Board.subdiv);

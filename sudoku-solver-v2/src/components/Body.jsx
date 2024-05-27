@@ -10,6 +10,7 @@ function Body() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [activeCell, setActiveCell] = useState([]);
   const [currentNum, setCurrentNum] = useState(0);
+  const [solve, setSolve] = useState(false);
   /*for currentNum
   -1 indicates dont change the current num
   0 indicates clear
@@ -63,6 +64,8 @@ function Body() {
           setActiveCell={setActiveCell}
           currentNum={currentNum}
           setCurrentNum={setCurrentNum}
+          solve={solve}
+          setSolve={setSolve}
         />
 
         <div className=" w-96  flex flex-col items-center gap-8 ">
@@ -81,7 +84,7 @@ function Body() {
           <div className=" flex flex-col  items-center justify-center gap-8">
             <BigBtn OnClick={() => setNum(0)}>Clear</BigBtn>
             <div className="flex flex-row  items-center justify-center gap-8">
-              <BigBtn>Solve</BigBtn>
+              <BigBtn OnClick={() => setSolve(true)}>Solve</BigBtn>
               <BigBtn
                 OnClick={() => {
                   setSearchParams({
