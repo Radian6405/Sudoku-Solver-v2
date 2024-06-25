@@ -6,6 +6,7 @@ export function solveBoard(Board) {
   for (let i = 0; i < Grid.size; i++) {
     for (let j = 0; j < Grid.size; j++) {
       if (!Grid[i][j].isLocked) {
+        Grid[i][j].value = 0;
         Grid[i][j].options = Array.from(
           { length: Board.size },
           (_, i) => i + 1
