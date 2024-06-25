@@ -3,6 +3,8 @@ import { useSearchParams } from "react-router-dom";
 import Board from "./SudokuBoard";
 import { useEffect } from "react";
 
+import { IconLockOpen } from "@tabler/icons-react";
+
 function Body() {
   const size = 9;
 
@@ -25,17 +27,16 @@ function Body() {
   }
 
   return (
-    <div className="px-1 py-1 sm:px-20 sm:py-10 bg-background flex flex-col ">
-      <div className="h-28   flex flex-row items-center justify-center gap-32 ">
+    <div className="py-4 bg-background flex flex-col">
+      <div className="flex flex-col items-center justify-center gap-2 m-1 sm:flex-row sm:m-4 md:gap-8">
         {/* Difficulty selector */}
         <div
-          className="w-42 h-16
-            flex justify-center items-center 
-            font-inria text-3xl text-clip overflow-hidden text-text"
+          className="flex justify-center items-center 
+            font-inria text-xl text-clip overflow-hidden text-text sm:text-3xl md:text-4xl"
         >
           Difficulty:
         </div>
-        <div className="h-28 flex flex-row items-center gap-20">
+        <div className="flex flex-row justify-between items-center gap-2 sm:flex-row sm:gap-2">
           <BigBtn
             OnClick={() => setSearchParams({ difficulty: "easy", next: true })}
           >
@@ -56,8 +57,7 @@ function Body() {
         </div>
       </div>
 
-      <div className="flex justify-center p-5 gap-16">
-        {/* Sudoku board */}
+      <div className="flex flex-col justify-center items-center my-5 gap-4 lg:flex-row lg:gap-16">
         <Board
           activeCell={activeCell}
           setActiveCell={setActiveCell}
@@ -67,9 +67,9 @@ function Body() {
           setSolve={setSolve}
         />
 
-        <div className=" w-96  flex flex-col items-center gap-8 ">
+        <div className="flex flex-col items-center gap-4 sm:gap-8 ">
           {/* Numpad */}
-          <div className=" grid grid-cols-3 gap-6 ">
+          <div className=" grid grid-cols-9 gap-1 sm:gap-3 lg:grid-cols-3">
             {[...Array(size).keys()].map((_, j) => {
               return (
                 <NumBtn key={j} OnClick={() => setNum(j + 1)}>
@@ -80,11 +80,13 @@ function Body() {
           </div>
 
           {/* buttons */}
-          <div className=" flex flex-col  items-center justify-center gap-8">
-            <BigBtn OnClick={() => setNum(0)}>Clear</BigBtn>
-            <div className="flex flex-row  items-center justify-center gap-8">
-              <BigBtn OnClick={() => setSolve(true)}>Solve</BigBtn>
-              <BigBtn
+          <div className=" flex flex-col items-center justify-center gap-8 md:gap-12">
+            <div className="flex flex-row  items-center justify-center gap-4">
+              <BigBtn OnClick={() => setNum(0)}>Clear</BigBtn>
+              <BigBtn>Clear all</BigBtn>
+            </div>
+            {/* TODO: add next button in the overlay */}
+            {/* <BigBtn
                 OnClick={() => {
                   setSearchParams({
                     difficulty: searchParams.get("difficulty"),
@@ -93,8 +95,11 @@ function Body() {
                 }}
               >
                 Next
-              </BigBtn>
-            </div>
+              </BigBtn> */}
+            <BigBtn OnClick={() => setSolve(true)}>
+              <IconLockOpen className="size-3 sm:size-5 md:size-6 " stroke={2} />
+              <span className="mx-1">Solve</span>
+            </BigBtn>
           </div>
         </div>
       </div>
@@ -106,10 +111,10 @@ export default Body;
 function BigBtn({ OnClick, children }) {
   return (
     <div
-      className="w-40 h-16 bg-secondary rounded-lg
+      className="w-20 p-1 bg-secondary rounded-md
                   flex justify-center items-center 
-                  font-inria text-3xl text-clip overflow-hidden text-text select-none	
-                 hover:bg-accent hover:cursor-pointer"
+                  font-inria text-base text-clip overflow-hidden text-text select-none	
+                 hover:bg-accent hover:cursor-pointer sm:text-2xl sm:min-w-32 sm:p-2 sm:rounded-lg md:text-3xl md:min-w-40 md:p-3  "
       onClick={OnClick}
     >
       {children}
@@ -121,15 +126,14 @@ function NumBtn({ OnClick, children }) {
   return (
     <>
       <div
-        className="size-[4.5rem] 
-        rounded-[7px] bg-secondary
+        className="size-7 
+        rounded-md  bg-secondary
         flex justify-center items-center 
-        font-inria text-4xl text-clip overflow-hidden text-text select-none	
-                    hover:bg-accent hover:cursor-pointer"
+        font-inria text-l text-clip overflow-hidden text-text select-none	
+      hover:bg-accent hover:cursor-pointer sm:size-14 sm:text-3xl sm:rounded-lg lg:size-[4.5rem] lg:text-4xl lg:rounded-xl "
         onClick={OnClick}
       >
-        {" "}
-        {children}{" "}
+        {children}
       </div>
     </>
   );

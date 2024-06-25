@@ -118,7 +118,7 @@ function Cell({ row, col, cell, size, onClick, isActive }) {
 
   return (
     <div
-      className={"size-[3.5rem] flex items-center justify-center text-3xl select-none hover:cursor-pointer"
+      className={"size-8 flex items-center justify-center text-l select-none hover:cursor-pointer sm:size-16 sm:text-3xl "
         //sudoku board border logic
         .concat(" ", col % subdiv === subdiv - 1 && !isActive && " border-r-2")
         .concat(" ", col % subdiv === 0 && !isActive && " border-l-2")
