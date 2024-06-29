@@ -4,7 +4,7 @@ import HardBoards from "../../assets/database/hard.json";
 
 export function initBoard(size) {
   // returns basic empty board
-  
+
   let Board = {};
   for (let i = 0; i < size; i++) {
     Board[i] = {};
@@ -20,7 +20,7 @@ export function initBoard(size) {
 
 //cell checker functions
 export function isValidCell(Board, loc, num) {
-  //ignoring when clear is pressed 
+  //ignoring when clear is pressed
   if (num === 0) return { isValid: true };
 
   //row check
@@ -32,7 +32,7 @@ export function isValidCell(Board, loc, num) {
   for (let i = 0; i < Board.size; i++) {
     if (Board[i][loc[1]].value === num && i !== loc[0])
       return { isValid: false, row: i, col: loc[1] };
-  } 
+  }
   //smaller grid check
   const rnew = loc[0] - (loc[0] % Board.subdiv);
   const cnew = loc[1] - (loc[1] % Board.subdiv);
@@ -97,4 +97,15 @@ function getSudokuData(difficulty) {
     default:
       return {};
   }
+}
+
+export function makeCopyBoard(Board) {
+  let copyBoard = { ...Board };
+  for (let i = 0; i < Board.size; i++) {
+    copyBoard[i] = {};
+    for (let j = 0; j < Board.size; j++) {
+      copyBoard[i][j] = { ...Board[i][j] };
+    }
+  }
+  return copyBoard;
 }

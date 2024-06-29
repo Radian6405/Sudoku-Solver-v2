@@ -83,7 +83,7 @@ function Body() {
           <div className=" flex flex-col items-center justify-center gap-8 md:gap-12">
             <div className="flex flex-row  items-center justify-center gap-4">
               <BigBtn OnClick={() => setNum(0)}>Clear</BigBtn>
-              <BigBtn>Clear all</BigBtn>
+              <BigBtn OnClick={() => setNum(-2)}>Clear all</BigBtn>
             </div>
             {/* TODO: add next button in the overlay */}
             {/* <BigBtn
@@ -97,7 +97,10 @@ function Body() {
                 Next
               </BigBtn> */}
             <BigBtn OnClick={() => setSolve(true)}>
-              <IconLockOpen className="size-3 sm:size-5 md:size-6 " stroke={2} />
+              <IconLockOpen
+                className="size-3 sm:size-5 md:size-6 "
+                stroke={2}
+              />
               <span className="mx-1">Solve</span>
             </BigBtn>
           </div>

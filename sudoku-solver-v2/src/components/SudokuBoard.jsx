@@ -22,7 +22,7 @@ function Board({
     //updates board when current num changes
 
     if (
-      currentNum !== -1 &&
+      currentNum >= 0 &&
       activeCell.length !== 0 &&
       !Board[activeCell[0]][activeCell[1]].isLocked
     ) {
@@ -30,6 +30,15 @@ function Board({
       let check = isValidCell(Board, activeCell, currentNum);
       updateBoard(currentNum, activeCell[0], activeCell[1]);
       setBoard(showError(Board, check, activeCell));
+    } else if (currentNum < -1) {
+      for (let i = 0; i < Board.size; i++) {
+        for (let j = 0; j < Board.size; j++) {
+          if (!Board[i][j].isLocked) {
+            updateBoard(0, i, j);
+          }
+        }
+      }
+      setCurrentNum(-1);
     }
   }, [currentNum]);
 
@@ -53,16 +62,13 @@ function Board({
   useEffect(() => {
     //solves the board
     if (solve) {
-      setBoard(solveBoard(Board))
-      // solveBoard(Board);
+      setBoard(solveBoard(Board));
     }
   }, [solve]);
 
   function updateBoard(num, row, col) {
-    //updates board by creating a new board
-    var newBoard = { ...Board };
-    newBoard[row][col].value = num;
-    setBoard(newBoard);
+    //updates board
+    Board[row][col].value = num;
   }
 
   function changeActiveCell(row, col) {

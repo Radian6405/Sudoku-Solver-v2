@@ -1,8 +1,8 @@
-import { isValidCell } from "./Helpers";
+import { isValidCell, makeCopyBoard } from "./Helpers";
 
 export function solveBoard(Board) {
   //initalizing the grid to solve with all possible options(1 to size)
-  let Grid = { ...Board };
+  let Grid = makeCopyBoard(Board);
   for (let i = 0; i < Grid.size; i++) {
     for (let j = 0; j < Grid.size; j++) {
       if (!Grid[i][j].isLocked) {
