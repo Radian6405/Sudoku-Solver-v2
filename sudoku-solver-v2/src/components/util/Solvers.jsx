@@ -253,7 +253,7 @@ function modifyCellOptions(Grid, row, col) {
 
   return isModified;
 }
-function isSolved(Grid) {
+export function isSolved(Grid) {
   //checks if Grid is solved
 
   const solveSum = (Grid.size * (Grid.size + 1)) / 2;

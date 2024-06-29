@@ -28,7 +28,7 @@ function Body() {
 
   return (
     <div className="py-4 bg-background flex flex-col">
-      <div className="flex flex-col items-center justify-center gap-2 m-1 sm:flex-row sm:m-4 md:gap-8">
+      <div className="flex flex-col items-center justify-center gap-4 m-1 sm:flex-row sm:m-4 md:gap-8">
         {/* Difficulty selector */}
         <div
           className="flex justify-center items-center 
@@ -57,7 +57,7 @@ function Body() {
         </div>
       </div>
 
-      <div className="flex flex-col justify-center items-center my-5 gap-4 lg:flex-row lg:gap-16">
+      <div className="flex flex-col justify-center items-center my-5 gap-8 lg:flex-row lg:gap-16">
         <Board
           activeCell={activeCell}
           setActiveCell={setActiveCell}
@@ -85,17 +85,6 @@ function Body() {
               <BigBtn OnClick={() => setNum(0)}>Clear</BigBtn>
               <BigBtn OnClick={() => setNum(-2)}>Clear all</BigBtn>
             </div>
-            {/* TODO: add next button in the overlay */}
-            {/* <BigBtn
-                OnClick={() => {
-                  setSearchParams({
-                    difficulty: searchParams.get("difficulty"),
-                    next: true,
-                  });
-                }}
-              >
-                Next
-              </BigBtn> */}
             <BigBtn OnClick={() => setSolve(true)}>
               <IconLockOpen
                 className="size-3 sm:size-5 md:size-6 "
@@ -111,7 +100,7 @@ function Body() {
 }
 export default Body;
 
-function BigBtn({ OnClick, children }) {
+export function BigBtn({ OnClick, children }) {
   return (
     <div
       className="w-20 p-1 bg-secondary rounded-md
@@ -125,7 +114,7 @@ function BigBtn({ OnClick, children }) {
   );
 }
 
-function NumBtn({ OnClick, children }) {
+export function NumBtn({ OnClick, children }) {
   return (
     <>
       <div
