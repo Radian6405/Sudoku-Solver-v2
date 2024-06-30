@@ -66,7 +66,7 @@ function Board({
 
   useEffect(() => {
     //solves the board
-    if (solve) {
+    if (solve && !preOverlay) {
       setBoard(solveBoard(Board));
     }
   }, [solve]);
@@ -99,7 +99,7 @@ function Board({
             </div>
           </div>
         )}
-        {solve && postOverlay && (
+        {solve && postOverlay && !preOverlay && (
           <div className="z-10 absolute inset-0 bg-opacity-90 bg-darkbg flex flex-col items-center justify-center p-10 gap-5 sm:gap-10">
             <div className="flex flex-col items-center justify-center gap-2">
               <div className="text-5xl text-text text-center leading-24 sm:text-6xl md:text-7xl">
