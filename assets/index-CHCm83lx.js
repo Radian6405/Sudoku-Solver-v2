@@ -98,4 +98,4 @@ Error generating stack: `+i.message+`
         rounded-md  bg-secondary\r
         flex justify-center items-center \r
         font-inria text-l text-clip overflow-hidden text-text select-none	\r
-      hover:bg-accent hover:cursor-pointer sm:size-14 sm:text-3xl sm:rounded-lg lg:size-[4.5rem] lg:text-4xl lg:rounded-xl `,onClick:e,children:t})})}const Dl=()=>E.jsx(E.Fragment,{children:E.jsxs("div",{children:[E.jsx(Cr,{}),E.jsx(ml,{children:E.jsx(Ve,{path:"/",element:E.jsx(Il,{})})})]})});r4.createRoot(document.getElementById("root")).render(E.jsx(z8.StrictMode,{children:E.jsx(xl,{children:E.jsx(Dl,{})})}));
+      hover:bg-accent hover:cursor-pointer sm:size-14 sm:text-3xl sm:rounded-lg lg:size-[4.5rem] lg:text-4xl lg:rounded-xl `,onClick:e,children:t})})}const Dl=()=>E.jsx(E.Fragment,{children:E.jsxs("div",{children:[E.jsx(Cr,{}),E.jsx(ml,{children:E.jsx(Ve,{path:"#",element:E.jsx(Il,{})})})]})});r4.createRoot(document.getElementById("root")).render(E.jsx(z8.StrictMode,{children:E.jsx(xl,{children:E.jsx(Dl,{})})}));
