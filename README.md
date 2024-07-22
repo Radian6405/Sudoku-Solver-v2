@@ -1,9 +1,11 @@
-<!-- PROJECT LOGO -->
 # Sudoku Solver
 
 A simple website to solve sudoku puzzles!
 
-<!-- ABOUT THE PROJECT -->
+## Live Demo
+
+You can view this project live here [Sudoku-Solver-v2](https://radian6405.github.io/Sudoku-Solver-v2/)
+
 ## About The Project
 
 ![image](https://github.com/user-attachments/assets/d81d836e-fb41-4f81-946a-580dec79805d)
@@ -15,7 +17,6 @@ This project started with me wanted to write a sudoku-solving algorithm and a si
 * ![Vite](https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E)
 * ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 
-<!-- GETTING STARTED -->
 ## Getting Started
 
 To run this project locally follow these steps:
